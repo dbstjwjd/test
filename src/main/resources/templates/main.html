@@ -16,10 +16,16 @@
                 </li>
             </ul>
             <div>
-                <form action="/notebook/write" method="post">
+                <form th:action="@{/notebook/write}" method="post">
                     <input type="submit" value="추가">
                 </form>
+                <form th:action="@{|/notebook/modify/${targetNotebook.id}|}" method="post" id="modifyForm">
+                    <input type="text" name="name" th:value="${targetNotebook.name}" id="modifyContent">
+                    <input type="button" value="수정" id="modifyBtn">
+                </form>
+                <a th:href="@{|/notebook/delete/${targetNotebook.id}|}">삭제</a>
             </div>
+            <a th:href="@{/user/logout}">로그아웃</a>
         </div>
         <div class="side-page">
             <!--            3. 템플릿에서 게시물 목록 출력-->
@@ -29,7 +35,7 @@
                 </li>
             </ul>
             <div>
-                <form action="/write" method="post">
+                <form th:action="@{/write}" method="post">
                     <input type="hidden" name="notebookId" th:value="${targetNotebook.id}">
                     <input type="submit" value="추가">
                 </form>
@@ -72,6 +78,14 @@
             input.form.submit();
         }
     }
+
+    const modify = document.querySelector("#modifyBtn");
+    modify.addEventListener('click', function() {
+        if (document.querySelector("#modifyContent").value == '')
+            alert("수정할 이름을 입력해주세요.");
+        else
+            document.querySelector("#modifyForm").submit();
+    });
 </script>
 </body>
 </html>

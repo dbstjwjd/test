@@ -19,7 +19,7 @@ public class Notebook {
     @Column(nullable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "notebook")
+    @OneToMany(mappedBy = "notebook", cascade = CascadeType.REMOVE)
     private List<NotePage> notePageList;
 
 }

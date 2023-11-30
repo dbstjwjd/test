@@ -1,8 +1,10 @@
 package com.korea.test;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +59,20 @@ public class NotebookController {
     public String write() {
         Notebook notebook = notebookService.saveDefaultNotebook();
         notePageService.saveDefaultNotePage(notebook);
+        return "redirect:/";
+    }
+
+    @PostMapping("/modify/{id}")
+    public String modify(@PathVariable("id") Long id, String name) {
+        Notebook notebook = this.notebookService.getNotebookById(id);
+        this.notebookService.modifyNotebook(notebook, name);
+        return "redirect:/";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        Notebook notebook = this.notebookService.getNotebookById(id);
+        this.notebookService.deleteNotebook(notebook);
         return "redirect:/";
     }
 }
